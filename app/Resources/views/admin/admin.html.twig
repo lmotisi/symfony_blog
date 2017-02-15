@@ -1,0 +1,10 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Page Admin{% endblock %}
+
+{% block body %}
+    <h1>Administration du blog</h1>
+    <div> <a href="{{ path('add_article') }}">Ajouter un article</a> </div>
+    <div> <a href="{{ path('add_categorie') }}">Ajouter une catégorie</a></div>
+    <div> <a href="{{ path('add_tag') }}">Ajouter un tag</a></div>
+{% endblock %}
