@@ -32,8 +32,8 @@ security:
                 default_target_path: admin
             provider : database_provider
             logout:
-                path: /logout
-                target: login
+                path: logout
+                target: accueil
 
 
 

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Categorie
@@ -30,6 +31,13 @@ class Categorie
 
     /**
      * @ORM\OneToMany(targetEntity="Article", mappedBy="categorie")
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min=3,
+     *     max=32,
+     *     minMessage = "La catégorie doit être constituée d'au moins {{min}} caractères",
+     *     maxMessage = "La catégorie doit être consistuée au maximum de {{max}} caractères"
+     * )
      */
     private $article;
 

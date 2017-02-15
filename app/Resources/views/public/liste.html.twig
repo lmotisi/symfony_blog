@@ -1,0 +1,11 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <h1>Articles</h1>
+
+    {% for article in articles %}
+        <a href="{{ path('details', {'id': article.id}) }}">{{ article.nom }}</a>
+    {% endfor %}
+
+{% endblock %}

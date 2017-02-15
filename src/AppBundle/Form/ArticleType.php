@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,16 +19,35 @@ class ArticleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', TextType::class)
-            ->add('contenu', TextareaType::class)
-            ->add('dateParution', DateType::class)
+            ->add('nom', TextType::class, array(
+                'label' => 'Titre de l\'article:'
+            ))
+            ->add('contenu', TextareaType::class, array(
+                'label' => 'Contenu :'
+            ))
+            ->add('dateParution', DateType::class, array(
+                'label' => 'Date de parution de l\'article :',
+                'widget'   => 'single_text',
+                'format'   => 'dd/MM/yyyy',
+                'attr'     => array(
+                    'class'       => 'js_datepicker',
+                    'placeholder' => 'jj/mm/aaaa'
+                )
+            ))
             ->add('categorie', EntityType::class, array(
-                'class' => 'AppBundle:Categorie'
+                'label' => 'Catégorie :',
+                'class' => 'AppBundle:Categorie',
+                'choice_label' => 'nom'
             ))
             ->add('tags', EntityType::class, array(
+                'label' => 'Tags :',
                 'class' => 'AppBundle:Tag',
+                'choice_label' => 'nom',
                 'multiple' => true,
                 'expanded' => true
+            ))
+            ->add('save', SubmitType::class, array(
+                'label' => "Enregistrer"
             ));
     }
     

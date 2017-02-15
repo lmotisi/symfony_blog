@@ -1,0 +1,15 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <h1>Accueil</h1>
+    <h2> 5 derniers articles</h2>
+    <div>
+        {% for article in articles %}
+            {{ article.nom }}
+        {% endfor %}
+    </div>
+
+    <a href="{{ path('liste') }}"> Tous les articles </a>
+
+{% endblock %}

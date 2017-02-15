@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Article
@@ -25,6 +27,13 @@ class Article
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min=10,
+     *     max=255,
+     *     minMessage = "Le titre de l'article doit être constitué d'au moins {{min}} caractères",
+     *     maxMessage = "Le titre de l'article doit être constitué au maximum de {{max}} caractères"
+     * )
      */
     private $nom;
 
@@ -32,6 +41,7 @@ class Article
      * @var string
      *
      * @ORM\Column(name="contenu", type="text")
+     * @Assert\NotBlank()
      */
     private $contenu;
 
@@ -39,6 +49,7 @@ class Article
      * @var \DateTime
      *
      * @ORM\Column(name="date_parution", type="date")
+     * @Assert\GreaterThanOrEqual("today")
      */
     private $dateParution;
 

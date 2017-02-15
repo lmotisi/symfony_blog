@@ -3,5 +3,19 @@
 {% block title %}Ajouter un article{% endblock %}
 
 {% block body %}
+    <h1>Ajouter un article</h1>
+    {{ form(form) }}
+    <a href="{{ path('admin') }}">Retour</a>
+
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            alert('test');
+        });
+    </script>
+
+{% endblock%}

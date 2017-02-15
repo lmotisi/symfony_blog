@@ -4,6 +4,14 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Article;
+use AppBundle\Entity\Tag;
+use AppBundle\Entity\Categorie;
+use AppBundle\Form\CategorieType;
+use AppBundle\Form\ArticleType;
+use AppBundle\Form\TagType;
+
 
 /**
  * @Route("/admin")
@@ -22,28 +30,74 @@ class AdminController extends Controller
     /**
      * @Route("/ajout_article", name="add_article")
      */
-    public function addArticleAction()
+    public function addArticleAction(Request $request)
     {
-        return $this->render('admin/addArticle.html.twig', array(
-        ));
+        $article = new Article();
+
+        $form = $this->createForm(ArticleType::class, $article);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $article = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+            return $this->redirectToRoute('admin');
+        }
+
+            return $this->render('admin/addArticle.html.twig',
+                array('form'=> $form->createView())
+            );
     }
 
     /**
      * @Route("/ajout_categorie", name="add_categorie")
      */
-    public function addCategorieAction()
+    public function addCategorieAction(Request $request)
     {
-        return $this->render('admin/addCategorie.html.twig', array(
-        ));
+        $categorie = new Categorie();
+
+        $form = $this->createForm(CategorieType::class, $categorie);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $categorie = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($categorie);
+            $em->flush();
+            return $this->redirectToRoute('admin');
+        }
+        return $this->render('admin/addCategorie.html.twig',
+            array('form'=> $form->createView())
+        );
     }
 
     /**
      * @Route("/ajout_tag", name="add_tag")
      */
-    public function addTag()
+    public function addTag(Request $request)
     {
-        return $this->render('admin/addTag.html.twig', array(
-        ));
+        $tag = new Tag();
+
+        $form = $this->createForm(TagType::class, $tag);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $tag = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($tag);
+            $em->flush();
+            return $this->redirectToRoute('admin');
+        }
+        return $this->render('admin/addTag.html.twig',
+            array('form'=> $form->createView())
+        );
     }
 
 }

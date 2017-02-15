@@ -6,11 +6,25 @@
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
+    <body>
     <div id="wrapper">
         <div id="container">
-    <body>
+        <nav>
+            <ul>
+                <li><a href="{{ path('accueil') }}">Accueil</a></li>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+                {% else %}
+                    <li><a href="{{ path('login') }}">Connexion</a></li>
+                {% endif %}
+            </ul>
+        </nav>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('/js/jquery-3.1.1.min.js') }}"></script>
+        {% endblock %}
+        </div>
+    </div>
     </body>
         </div>
     </div>

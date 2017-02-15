@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Tag
@@ -25,6 +26,13 @@ class Tag
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *     min=3,
+     *     max=32,
+     *     minMessage = "Le tag doit être constitué d'au moins {{min}} caractères",
+     *     maxMessage = "Le tag doit être constitué au maximum de {{max}} caractères"
+     * )
      */
     private $nom;
 
