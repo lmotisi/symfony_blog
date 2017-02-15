@@ -29,10 +29,10 @@ class Article
      * @ORM\Column(name="nom", type="string", length=255)
      * @Assert\NotBlank()
      * @Assert\Length(
-     *     min=10,
+     *     min=5,
      *     max=255,
-     *     minMessage = "Le titre de l'article doit être constitué d'au moins {{min}} caractères",
-     *     maxMessage = "Le titre de l'article doit être constitué au maximum de {{max}} caractères"
+     *     minMessage = "Le titre de l'article doit être constitué d'au moins {{ limit }} caractères",
+     *     maxMessage = "Le titre de l'article doit être constitué au maximum de {{ limit }} caractères"
      * )
      */
     private $nom;
@@ -49,20 +49,29 @@ class Article
      * @var \DateTime
      *
      * @ORM\Column(name="date_parution", type="date")
-     * @Assert\GreaterThanOrEqual("today")
+     * @Assert\GreaterThanOrEqual("today", message="La date doit être supérieure ou égale à la date d'aujourd'hui")
      */
     private $dateParution;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="article")
+     * @ORM\ManyToOne(targetEntity="Categorie", inversedBy="articles")
      */
     private $categorie;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="article")
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
      */
     private $tags;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     */
+    private $auteur;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Commentaire", mappedBy="article", cascade={"remove"})
+     */
+    private $commentaires;
 
 
     /**
@@ -210,5 +219,63 @@ class Article
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set auteur
+     *
+     * @param \AppBundle\Entity\User $auteur
+     *
+     * @return Article
+     */
+    public function setAuteur(\AppBundle\Entity\User $auteur = null)
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * Get auteur
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    /**
+     * Add commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     *
+     * @return Article
+     */
+    public function addCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \AppBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\AppBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
     }
 }

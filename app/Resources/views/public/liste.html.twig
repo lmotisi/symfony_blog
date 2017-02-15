@@ -1,11 +1,11 @@
 {% extends "::base.html.twig" %}
-
+{% block title %}Liste des Articles{% endblock %}
 {% block body %}
 
-    <h1>Articles</h1>
+    <h4>Tous les articles</h4>
 
     {% for article in articles %}
-        <a href="{{ path('details', {'id': article.id}) }}">{{ article.nom }}</a>
+        <div><a href="{{ path('details', {'id': article.id}) }}">{{ article.nom }}</a> - posté le {{ article.dateParution|date("d/m/Y") }}</div>
     {% endfor %}
 
 {% endblock %}

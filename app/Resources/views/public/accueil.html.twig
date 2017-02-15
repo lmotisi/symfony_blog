@@ -2,13 +2,11 @@
 
 {% block body %}
 
-    <h1>Accueil</h1>
-    <h2> 5 derniers articles</h2>
-    <div>
-        {% for article in articles %}
-            {{ article.nom }}
-        {% endfor %}
-    </div>
+    <h3>Accueil du blog</h3>
+    <h4> Les 5 derniers articles du blog</h4>
+    {% for article in articles %}
+        <div> <a href="{{ path('details', {id:article.id}) }}">{{ article.nom }}</a> - posté le {{ article.dateParution|date("d/m/Y") }} </div>
+    {% endfor %}
 
     <a href="{{ path('liste') }}"> Tous les articles </a>
 

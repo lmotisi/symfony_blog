@@ -1,0 +1,9 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Editer un article{% endblock %}
+
+{% block body %}
+    <h4>Editer un article</h4>
+    {{ form(edit_form) }}
+    <a href="{{ path('details', {id:article.id}) }}">Annuler</a>
+{% endblock %}

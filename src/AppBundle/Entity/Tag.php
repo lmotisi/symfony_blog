@@ -30,8 +30,8 @@ class Tag
      * @Assert\Length(
      *     min=3,
      *     max=32,
-     *     minMessage = "Le tag doit être constitué d'au moins {{min}} caractères",
-     *     maxMessage = "Le tag doit être constitué au maximum de {{max}} caractères"
+     *     minMessage = "Le tag doit être constitué d'au moins {{ limit }} caractères",
+     *     maxMessage = "Le tag doit être constitué au maximum de {{ limit }} caractères"
      * )
      */
     private $nom;

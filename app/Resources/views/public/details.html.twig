@@ -1,7 +1,28 @@
 {% extends "::base.html.twig" %}
-
+{% block title %}{{ article.nom }}{% endblock %}
 {% block body %}
 
-    <h1>{{ article.nom }}</h1>
+    <h4>{{ article.nom }}</h4>
+    <p> {{  article.contenu}}</p>
+    <p> Catégorie : {{ article.categorie.nom }}</p>
+    <p> Auteur: {{ article.auteur.username }}</p>
+    <p>Tags associés:</p>
+    <ul>
+        {% for tag in article.tags %}
+            <li>{{ tag.nom }}</li>
+        {% endfor %}
+    </ul>
+    <h5>Commentaires</h5>
+    {% for commentaire in commentaires %}
+        <p>{{ commentaire.contenu }}, écrit par {{ commentaire.auteur }}, le {{ commentaire.date|date("d/m/Y") }}</p>
+    {% endfor %}
+    <h5> Ajouter un commentaire</h5>
+    {{ form(commentaire_form) }}
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('edit_article', { 'id': article.id }) }}">Éditer</a>
+        {{ form_start(delete_form) }}
+            <input type="submit" value="Supprimer l'article">
+        {{ form_end(delete_form) }}
+    {% endif %}
 
 {% endblock %}

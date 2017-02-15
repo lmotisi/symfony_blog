@@ -11,6 +11,7 @@ use AppBundle\Entity\Categorie;
 use AppBundle\Form\CategorieType;
 use AppBundle\Form\ArticleType;
 use AppBundle\Form\TagType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 /**
@@ -35,12 +36,14 @@ class AdminController extends Controller
         $article = new Article();
 
         $form = $this->createForm(ArticleType::class, $article);
+        $form ->add('save', SubmitType::class, array('label' => "Enregistrer"));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $article = $form->getData();
+            $article->setAuteur($this->getUser());
             $em = $this->getDoctrine()->getManager();
             $em->persist($article);
             $em->flush();
@@ -60,6 +63,7 @@ class AdminController extends Controller
         $categorie = new Categorie();
 
         $form = $this->createForm(CategorieType::class, $categorie);
+        $form ->add('save', SubmitType::class, array('label' => "Enregistrer"));
 
         $form->handleRequest($request);
 
@@ -84,6 +88,7 @@ class AdminController extends Controller
         $tag = new Tag();
 
         $form = $this->createForm(TagType::class, $tag);
+        $form ->add('save', SubmitType::class, array('label' => "Enregistrer"));
 
         $form->handleRequest($request);
 
@@ -99,5 +104,9 @@ class AdminController extends Controller
             array('form'=> $form->createView())
         );
     }
+
+
+
+
 
 }

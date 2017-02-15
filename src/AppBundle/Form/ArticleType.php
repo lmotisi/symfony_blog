@@ -5,7 +5,6 @@ namespace AppBundle\Form;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,14 +29,15 @@ class ArticleType extends AbstractType
                 'widget'   => 'single_text',
                 'format'   => 'dd/MM/yyyy',
                 'attr'     => array(
-                    'class'       => 'js_datepicker',
+                    'class'       => 'js-datepicker',
                     'placeholder' => 'jj/mm/aaaa'
                 )
             ))
             ->add('categorie', EntityType::class, array(
                 'label' => 'Catégorie :',
                 'class' => 'AppBundle:Categorie',
-                'choice_label' => 'nom'
+                'choice_label' => 'nom',
+                //'expanded' => true
             ))
             ->add('tags', EntityType::class, array(
                 'label' => 'Tags :',
@@ -45,9 +45,6 @@ class ArticleType extends AbstractType
                 'choice_label' => 'nom',
                 'multiple' => true,
                 'expanded' => true
-            ))
-            ->add('save', SubmitType::class, array(
-                'label' => "Enregistrer"
             ));
     }
     

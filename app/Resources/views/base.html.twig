@@ -3,7 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Symfony Blog{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <link rel="stylesheet" href="{{ asset('css/materialize.css') }}" />
+        {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
@@ -12,6 +15,9 @@
         <nav>
             <ul>
                 <li><a href="{{ path('accueil') }}">Accueil</a></li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li><a href="{{ path('admin') }}">Admin</a></li>
+                {% endif %}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <li><a href="{{ path('logout') }}">Déconnexion</a></li>
                 {% else %}
@@ -22,6 +28,12 @@
         {% block body %}{% endblock %}
         {% block javascripts %}
             <script src="{{ asset('/js/jquery-3.1.1.min.js') }}"></script>
+            <script src="{{ asset('/js/materialize.js') }}"></script>
+            <script>
+                $(document).ready(function() {
+                    $('select').material_select();
+                });
+            </script>
         {% endblock %}
         </div>
     </div>

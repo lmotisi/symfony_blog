@@ -13,6 +13,7 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
     public function findLast5Articles()
     {
         return $this->createQueryBuilder('a')
+            ->where('DATE_DIFF(CURRENT_DATE(), a.dateParution) >= 0')
             ->orderBy('a.dateParution', 'DESC')
             ->getQuery()
             ->setMaxResults(5)
@@ -22,6 +23,7 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
     public function findAllByDate()
     {
         return $this->createQueryBuilder('a')
+            ->where('DATE_DIFF(CURRENT_DATE(), a.dateParution) >= 0')
             ->orderBy('a.dateParution', 'DESC')
             ->getQuery()
             ->getResult();

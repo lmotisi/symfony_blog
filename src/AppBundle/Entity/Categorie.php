@@ -34,12 +34,12 @@ class Categorie
      * @Assert\NotBlank()
      * @Assert\Length(
      *     min=3,
-     *     max=32,
-     *     minMessage = "La catégorie doit être constituée d'au moins {{min}} caractères",
-     *     maxMessage = "La catégorie doit être consistuée au maximum de {{max}} caractères"
+     *     max=128,
+     *     minMessage = "La catégorie doit être constituée d'au moins {{ limit }} caractères",
+     *     maxMessage = "La catégorie doit être consistuée au maximum de {{ limit }} caractères"
      * )
      */
-    private $article;
+    private $articles;
 
 
     /**
@@ -80,7 +80,7 @@ class Categorie
      */
     public function __construct()
     {
-        $this->article = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -92,7 +92,7 @@ class Categorie
      */
     public function addArticle(\AppBundle\Entity\Article $article)
     {
-        $this->article[] = $article;
+        $this->articles[] = $article;
 
         return $this;
     }
@@ -104,7 +104,7 @@ class Categorie
      */
     public function removeArticle(\AppBundle\Entity\Article $article)
     {
-        $this->article->removeElement($article);
+        $this->articles->removeElement($article);
     }
 
     /**
@@ -112,8 +112,8 @@ class Categorie
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getArticle()
+    public function getArticles()
     {
-        return $this->article;
+        return $this->articles;
     }
 }
